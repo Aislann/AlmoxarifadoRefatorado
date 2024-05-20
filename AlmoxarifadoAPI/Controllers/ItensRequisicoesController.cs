@@ -1,4 +1,5 @@
-﻿using AlmoxarifadoServices;
+﻿using AlmoxarifadoDomain.Models;
+using AlmoxarifadoServices;
 using AlmoxarifadoServices.DTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,11 @@ namespace AlmoxarifadoAPI.Controllers
     public class ItensRequisicoesController : ControllerBase
     {
         private readonly ItensRequisicaoService _itensRequisicaoService;
-
-        public ItensRequisicoesController(ItensRequisicaoService itensRequisicaoService)
+        private readonly EstoqueService _estoqueService;
+        public ItensRequisicoesController(ItensRequisicaoService itensRequisicaoService, EstoqueService estoqueService)
         {
             _itensRequisicaoService = itensRequisicaoService;
+            _estoqueService = estoqueService;
         }
 
         [HttpGet]
@@ -57,11 +59,22 @@ namespace AlmoxarifadoAPI.Controllers
             try
             {
                 var itensSalvos = _itensRequisicaoService.CriarItemRequisicao(itensRequisicao);
+                _estoqueService.AtualizarEstoqueAoSairRequisicao(new ItensRequisicao
+                {
+                    NumItem = itensSalvos.NumItem,
+                    IdPro = itensSalvos.IdPro,
+                    IdReq = itensSalvos.IdReq,
+                    IdSec = itensSalvos.IdSec, 
+                    QtdPro = itensSalvos.QtdPro,
+                    PreUnit = itensSalvos.PreUnit,
+                    TotalItem = itensSalvos.TotalItem,
+                    TotalReal = itensSalvos.TotalReal
+                });
                 return Ok(itensSalvos);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+                return StatusCode(500, e.Message );
             }
         }
 
@@ -75,6 +88,17 @@ namespace AlmoxarifadoAPI.Controllers
                 {
                     return StatusCode(404, "Nenhum item encontrado com este ID");
                 }
+                _estoqueService.AtualizarEstoqueAoSairRequisicao(new ItensRequisicao
+                {
+                    NumItem = itemAtualizado.NumItem,
+                    IdPro = itemAtualizado.IdPro,
+                    IdReq = itemAtualizado.IdReq,
+                    IdSec = itemAtualizado.IdSec,
+                    QtdPro = itemAtualizado.QtdPro,
+                    PreUnit = itemAtualizado.PreUnit,
+                    TotalItem = itemAtualizado.TotalItem,
+                    TotalReal = itemAtualizado.TotalReal
+                });
                 return Ok(itemAtualizado);
             }
             catch (Exception)

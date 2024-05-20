@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlmoxarifadoServices;
 using AlmoxarifadoServices.DTO;
+using AlmoxarifadoDomain.Models;
 
 namespace AlmoxarifadoAPI.Controllers
 {
@@ -9,10 +10,11 @@ namespace AlmoxarifadoAPI.Controllers
     public class ItensNotasController : ControllerBase
     {
         private readonly ItensNotaService _itensNotaService;
-
-        public ItensNotasController(ItensNotaService itensNotaService)
+        private readonly EstoqueService _estoqueService;
+        public ItensNotasController(ItensNotaService itensNotaService, EstoqueService estoqueService)
         {
             _itensNotaService = itensNotaService;
+            _estoqueService = estoqueService;
         }
 
         [HttpGet]
@@ -55,6 +57,17 @@ namespace AlmoxarifadoAPI.Controllers
             try
             {
                 var itemSalvo = _itensNotaService.CriarItemNota(itens);
+                _estoqueService.AtualizarEstoqueAoEntrarNotaFiscal(new ItensNota
+                {
+                    ItemNum = itemSalvo.ItemNum,
+                    IdPro = itemSalvo.IdPro,
+                    IdNota = itemSalvo.IdNota,
+                    IdSec = itemSalvo.IdSec,
+                    QtdPro = itemSalvo.QtdPro,
+                    PreUnit = itemSalvo.PreUnit,
+                    TotalItem = itemSalvo.TotalItem,
+                    EstLin = itemSalvo.EstLin
+                });
                 return Ok(itemSalvo);
             }
             catch (Exception)
@@ -74,6 +87,17 @@ namespace AlmoxarifadoAPI.Controllers
                 {
                     return StatusCode(404, "Nenhum item encontrado com este ID");
                 }
+                _estoqueService.AtualizarEstoqueAoEntrarNotaFiscal(new ItensNota
+                {
+                    ItemNum = itemAtualizado.ItemNum,
+                    IdPro = itemAtualizado.IdPro,
+                    IdNota = itemAtualizado.IdNota,
+                    IdSec = itemAtualizado.IdSec,
+                    QtdPro = itemAtualizado.QtdPro,
+                    PreUnit = itemAtualizado.PreUnit,
+                    TotalItem = itemAtualizado.TotalItem,
+                    EstLin = itemAtualizado.EstLin
+                });
                 return Ok(itemAtualizado);
             }
             catch (Exception)
