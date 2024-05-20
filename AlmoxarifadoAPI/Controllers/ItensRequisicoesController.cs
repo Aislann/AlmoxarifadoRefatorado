@@ -1,77 +1,111 @@
-﻿using AlmoxarifadoDomain.Models;
+﻿using AlmoxarifadoServices;
+using AlmoxarifadoServices.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AlmoxarifadoAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ItensRequisicoesController : ControllerBase
     {
-        private readonly xAlmoxarifadoContext _context;
+        private readonly ItensRequisicaoService _itensRequisicaoService;
 
-        public ItensRequisicoesController(xAlmoxarifadoContext context)
+        public ItensRequisicoesController(ItensRequisicaoService itensRequisicaoService)
         {
-            _context = context;
+            _itensRequisicaoService = itensRequisicaoService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ItensRequisicao>>> GetItensReqs()
+        public IActionResult Get()
         {
-            if (_context.ItensReqs == null)
+            try
             {
-                return NotFound();
+                var itensRequisicao = _itensRequisicaoService.ObterTodosItensRequisicao();
+                return Ok(itensRequisicao);
             }
-            return await _context.ItensReqs.ToListAsync();
+            catch (Exception)
+            {
+
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+            }
+
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ItensRequisicao>> GetItensReq(int id)
+        [HttpGet("{numero}")]
+        public IActionResult GetPorID(int numero)
         {
-            if (_context.ItensReqs == null)
+            try
             {
-                return NotFound();
+                var itensRequisicao = _itensRequisicaoService.ObterItemRequisicaoPorNumero(numero);
+                if (itensRequisicao == null)
+                {
+                    return StatusCode(404, "Nenhum Usuario Encontrado com Esse Codigo");
+                }
+                return Ok(itensRequisicao);
             }
-            var itensReq = await _context.ItensReqs.FindAsync(id);
-
-            if (itensReq == null)
+            catch (Exception)
             {
-                return NotFound();
+
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
             }
 
-            return itensReq;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItensRequisicao>> PostItensReq(ItensRequisicao itensReq)
+        public IActionResult CriarItensRequisicao(ItensRequisicaoPostDTO itensRequisicao)
         {
-            if (_context.ItensReqs == null)
-            {
-                return Problem("Entity set 'xAlmoxarifadoContext.ItensReqs'  is null.");
-            }
-            _context.ItensReqs.Add(itensReq);
             try
             {
-                await _context.SaveChangesAsync();
+                var itensSalvos = _itensRequisicaoService.CriarItemRequisicao(itensRequisicao);
+                return Ok(itensSalvos);
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
-                if (ItensReqExists(itensReq.NumItem))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
             }
-
-            return CreatedAtAction("GetItensReq", new { id = itensReq.NumItem }, itensReq);
         }
 
-        private bool ItensReqExists(int id)
+        [HttpPut("{numero}")]
+        public IActionResult AtualizarItemRequisicao(int numero, ItensRequisicaoPutDTO novoItemRequisicao)
         {
-            return (_context.ItensReqs?.Any(e => e.NumItem == id)).GetValueOrDefault();
+            try
+            {
+                var itemAtualizado = _itensRequisicaoService.AtualizarItemRequisicao(numero, novoItemRequisicao);
+                if (itemAtualizado == null)
+                {
+                    return StatusCode(404, "Nenhum item encontrado com este ID");
+                }
+                return Ok(itemAtualizado);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+            }
+        }
+
+        [HttpDelete("{numero}")]
+        public IActionResult DeletarItemRequisicao(int numero)
+        {
+            try
+            {
+                var itemRequisicao= _itensRequisicaoService.ObterItemRequisicaoPorNumero(numero);
+                if (itemRequisicao == null)
+                {
+                    return StatusCode(404, "Nenhum item encontrado com este ID");
+                }
+
+                var itemDeletado = _itensRequisicaoService.DeletarItemRequisicao(itemRequisicao);
+                if (itemDeletado == null)
+                {
+                    return StatusCode(404, "Ocorreu um erro ao excluir o item");
+                }
+
+                return Ok(itemDeletado);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+            }
         }
     }
 }

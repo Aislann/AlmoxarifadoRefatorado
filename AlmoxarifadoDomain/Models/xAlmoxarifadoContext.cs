@@ -25,9 +25,9 @@ namespace AlmoxarifadoDomain.Models
         public virtual DbSet<ItensRequisicao> ItensReqs { get; set; } = null!;
         public virtual DbSet<MesCompetencium> MesCompetencia { get; set; } = null!;
         public virtual DbSet<Movimentacao> Movimentacaos { get; set; } = null!;
-        public virtual DbSet<NotaFiscal> NotaFiscals { get; set; } = null!;
+        public virtual DbSet<NotaFiscal> NotasFiscais { get; set; } = null!;
         public virtual DbSet<Produto> Produtos { get; set; } = null!;
-        public virtual DbSet<Requisicao> Requisicaos { get; set; } = null!;
+        public virtual DbSet<Requisicao> Requisicoes { get; set; } = null!;
         public virtual DbSet<Secretarium> Secretaria { get; set; } = null!;
         public virtual DbSet<Setor> Setors { get; set; } = null!;
         public virtual DbSet<Sistema> Sistemas { get; set; } = null!;

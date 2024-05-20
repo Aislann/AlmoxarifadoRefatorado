@@ -1,78 +1,108 @@
 ﻿using AlmoxarifadoDomain.Models;
+using AlmoxarifadoServices;
+using AlmoxarifadoServices.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AlmoxarifadoAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class NotasFiscaisController : ControllerBase
     {
-        private readonly xAlmoxarifadoContext _context;
-
-        public NotasFiscaisController(xAlmoxarifadoContext context)
+        private readonly NotaFiscalService _notaFiscalService;
+        public NotasFiscaisController(NotaFiscalService notaFiscalService)
         {
-            _context = context;
+            _notaFiscalService = notaFiscalService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NotaFiscal>>> GetNotaFiscals()
+        public IActionResult Get()
         {
-            if (_context.NotaFiscals == null)
+            try
             {
-                return NotFound();
+                var notaFiscal = _notaFiscalService.ObterTodasNotasFiscais();
+                return Ok(notaFiscal);
             }
-            return await _context.NotaFiscals.ToListAsync();
+            catch (Exception)
+            {
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+            }
+
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<NotaFiscal>> GetNotaFiscal(int id)
+        public IActionResult GetPorID(int id)
         {
-            if (_context.NotaFiscals == null)
+            try
             {
-                return NotFound();
+                var notaFiscal = _notaFiscalService.ObterNotaFiscalPorId(id);
+                if (notaFiscal == null)
+                {
+                    return StatusCode(404, "Nenhum Usuario Encontrado com Esse Codigo");
+                }
+                return Ok(notaFiscal);
             }
-            var notaFiscal = await _context.NotaFiscals.FindAsync(id);
-
-            if (notaFiscal == null)
+            catch (Exception)
             {
-                return NotFound();
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
             }
 
-            return notaFiscal;
         }
 
         [HttpPost]
-        public async Task<ActionResult<NotaFiscal>> PostNotaFiscal(NotaFiscal notaFiscal)
+        public IActionResult CriarNotaFiscal(NotaFiscalPostDTO notaFiscal)
         {
-            if (_context.NotaFiscals == null)
+            try
             {
-                return Problem("Entity set 'xAlmoxarifadoContext.NotaFiscals'  is null.");
+                var notaFiscalSalva = _notaFiscalService.CriarNotaFiscal(notaFiscal);
+                return Ok(notaFiscalSalva);
             }
-            _context.NotaFiscals.Add(notaFiscal);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNotaFiscal", new { id = notaFiscal.IdNota }, notaFiscal);
+            catch (Exception)
+            {
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+            }
         }
 
-        // DELETE: api/NotasFiscais/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotaFiscal(int id)
+        [HttpPut("{id}")]
+        public IActionResult AtualizarNotaFiscal(int id, NotaFiscalPutDTO notaFiscal)
         {
-            if (_context.NotaFiscals == null)
+            try
             {
-                return NotFound();
+                var notaFiscalAtualizada = _notaFiscalService.AtualizarNotaFiscal(id, notaFiscal);
+                if (notaFiscalAtualizada == null)
+                {
+                    return StatusCode(404, "Nenhum item encontrado com este ID");
+                }
+                return Ok(notaFiscalAtualizada);
             }
-            var notaFiscal = await _context.NotaFiscals.FindAsync(id);
-            if (notaFiscal == null)
+            catch (Exception)
             {
-                return NotFound();
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
             }
+        }
 
-            _context.NotaFiscals.Remove(notaFiscal);
-            await _context.SaveChangesAsync();
+        [HttpDelete("{id}")]
+        public IActionResult DeletarNotaFiscal(int id)
+        {
+            try
+            {
+                var notaFiscal = _notaFiscalService.ObterNotaFiscalPorId(id);
+                if (notaFiscal == null)
+                {
+                    return StatusCode(404, "Nenhum item encontrado com este ID");
+                }
 
-            return NoContent();
+                var notaFiscalDeletada = _notaFiscalService.DeletarNotaFiscal(notaFiscal);
+                if (notaFiscalDeletada == null)
+                {
+                    return StatusCode(404, "Ocorreu um erro ao excluir o item");
+                }
+                return Ok(notaFiscal);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+            }
         }
     }
 }
