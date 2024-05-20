@@ -6,8 +6,8 @@ namespace AlmoxarifadoInfrastructure.Data.Interfaces
     {
         List<ItensRequisicao> ObterTodosItensRequisicao();
         ItensRequisicao ObterItemRequisicaoPorNumero(int numeroItem);
-        List<ItensRequisicao> ObterItensRequisicaoPorRequisicao(int idRequisicao);
-
         ItensRequisicao CriarItemRequisicao(ItensRequisicao itemRequisicao);
+        ItensRequisicao AtualizarItemRequisicao(ItensRequisicao itemRequisicao);
+        ItensRequisicao DeletarItemRequisicao(ItensRequisicao itemRequisicao);
     }
 }

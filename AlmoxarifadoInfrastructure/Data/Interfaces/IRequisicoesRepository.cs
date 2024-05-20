@@ -2,14 +2,13 @@
 
 namespace AlmoxarifadoInfrastructure.Data.Interfaces
 {
-    public interface IRequisicaoRepository
+    public interface IRequisicoesRepository
     {
         List<Requisicao> ObterTodasRequisicoes();
         Requisicao ObterRequisicaoPorId(int idRequisicao);
-        List<Requisicao> ObterRequisicoesPorCliente(int idCliente);
-        List<Requisicao> ObterRequisicoesPorSetor(int idSetor);
-        List<Requisicao> ObterRequisicoesPorPeriodo(DateTime dataInicio, DateTime dataFim);
-
         Requisicao CriarRequisicao(Requisicao requisicao);
+        Requisicao AtualizarRequisicao(Requisicao requisicao);
+        Requisicao DeletarRequisicao(Requisicao requisicao);
+
     }
 }
