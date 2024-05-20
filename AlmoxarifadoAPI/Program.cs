@@ -19,6 +19,8 @@ builder.Services.AddScoped<INotaFiscalRepository, NotasFiscaisRepository>();
 builder.Services.AddScoped<NotaFiscalService>();
 builder.Services.AddScoped<IRequisicoesRepository, RequisicoesRepository>();
 builder.Services.AddScoped<RequisicaoService>();
+builder.Services.AddScoped<IEstoqueRepository, EstoqueRepository>();
+builder.Services.AddScoped<EstoqueService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
