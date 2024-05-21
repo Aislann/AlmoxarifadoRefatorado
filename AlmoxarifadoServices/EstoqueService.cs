@@ -32,27 +32,51 @@ namespace AlmoxarifadoServices
             }
         }
 
+        //public void AtualizarEstoqueAoSairRequisicao(ItensRequisicao itemRequisicao)
+        //{
+        //    var estoque = _estoqueRepository.ObterEstoquePorProduto(itemRequisicao.IdPro);
+
+        //    if (estoque != null)
+        //    {
+        //        if (estoque.QtdPro >= itemRequisicao.QtdPro)
+        //        {
+        //            estoque.QtdPro -= itemRequisicao.QtdPro;
+        //            _estoqueRepository.AtualizarEstoque(estoque);
+        //        }
+        //        else
+        //        {
+        //            throw new InvalidOperationException("Quantidade insuficiente em estoque");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new InvalidOperationException("Produto não encontrado no estoque");
+        //    }
+        //}
         public void AtualizarEstoqueAoSairRequisicao(ItensRequisicao itemRequisicao)
         {
             var estoque = _estoqueRepository.ObterEstoquePorProduto(itemRequisicao.IdPro);
 
             if (estoque != null)
             {
-                if (estoque.QtdPro >= itemRequisicao.QtdPro)
-                {
-                    estoque.QtdPro -= itemRequisicao.QtdPro;
-                    _estoqueRepository.AtualizarEstoque(estoque);
-                }
-                else
-                {
-                    throw new InvalidOperationException("Quantidade insuficiente em estoque");
-                }
+                VerificarQuantidadeEmEstoqueSuficiente(estoque, itemRequisicao.QtdPro);
+
+                estoque.QtdPro -= itemRequisicao.QtdPro;
+                _estoqueRepository.AtualizarEstoque(estoque);
             }
             else
             {
                 throw new InvalidOperationException("Produto não encontrado no estoque");
             }
         }
+        private void VerificarQuantidadeEmEstoqueSuficiente(Estoque estoque, decimal quantidadeRequisitada)
+        {
+            if (quantidadeRequisitada > estoque.QtdPro)
+            {
+                throw new InvalidOperationException("Quantidade requisitada excede a quantidade em estoque");
+            }
+        }
+
     }
 
 }
