@@ -32,27 +32,6 @@ namespace AlmoxarifadoServices
             }
         }
 
-        //public void AtualizarEstoqueAoSairRequisicao(ItensRequisicao itemRequisicao)
-        //{
-        //    var estoque = _estoqueRepository.ObterEstoquePorProduto(itemRequisicao.IdPro);
-
-        //    if (estoque != null)
-        //    {
-        //        if (estoque.QtdPro >= itemRequisicao.QtdPro)
-        //        {
-        //            estoque.QtdPro -= itemRequisicao.QtdPro;
-        //            _estoqueRepository.AtualizarEstoque(estoque);
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidOperationException("Quantidade insuficiente em estoque");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new InvalidOperationException("Produto não encontrado no estoque");
-        //    }
-        //}
         public void AtualizarEstoqueAoSairRequisicao(ItensRequisicao itemRequisicao)
         {
             var estoque = _estoqueRepository.ObterEstoquePorProduto(itemRequisicao.IdPro);

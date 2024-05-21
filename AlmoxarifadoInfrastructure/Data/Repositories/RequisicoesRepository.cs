@@ -1,6 +1,5 @@
 ﻿using AlmoxarifadoDomain.Models;
 using AlmoxarifadoInfrastructure.Data.Interfaces;
-using System.Collections.Generic;
 
 namespace AlmoxarifadoInfrastructure.Data.Repositories
 {

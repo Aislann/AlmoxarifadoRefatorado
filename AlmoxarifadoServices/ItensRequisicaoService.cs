@@ -1,9 +1,7 @@
 ﻿using AlmoxarifadoDomain.Models;
 using AlmoxarifadoInfrastructure.Data.Interfaces;
-using AlmoxarifadoInfrastructure.Data.Repositories;
 using AlmoxarifadoServices.DTO;
 using AutoMapper;
-using System.Collections.Generic;
 
 namespace AlmoxarifadoServices
 {
