@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using static AlmoxarifadoInfrastructure.Data.Repositories.ConexaoBancoRepository;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddSingleton<IConexaoBanco, PrimeiraConexao>(sp =>
-    new PrimeiraConexao(builder.Configuration));
 builder.Services.AddSingleton<IConexaoBanco, ReplicaConexao>(sp =>
     new ReplicaConexao(builder.Configuration));
+builder.Services.AddSingleton<IConexaoBanco, PrimeiraConexao>(sp =>
+    new PrimeiraConexao(builder.Configuration));
+
 builder.Services.AddSingleton<DbContextAlmoxarifado>();
 
 builder.Services.AddDbContext<xAlmoxarifadoContext>((serviceProvider, options) =>
@@ -33,6 +33,7 @@ builder.Services.AddScoped<IRequisicoesRepository, RequisicoesRepository>();
 builder.Services.AddScoped<RequisicaoService>();
 builder.Services.AddScoped<IEstoqueRepository, EstoqueRepository>();
 builder.Services.AddScoped<EstoqueService>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
