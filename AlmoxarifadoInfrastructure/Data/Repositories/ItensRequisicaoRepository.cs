@@ -50,10 +50,9 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
         public ItensRequisicao AtualizarItemRequisicao(ItensRequisicao itemRequisicao)
         {
-            var itemRequisicaoExistente = _context.ItensReqs.FirstOrDefault(i => i.IdReq == itemRequisicao.IdReq);
+            var itemRequisicaoExistente = _context.ItensReqs.FirstOrDefault(item => item.NumItem == itemRequisicao.NumItem);
             if (itemRequisicaoExistente != null)
             {
-                itemRequisicaoExistente.NumItem = itemRequisicao.NumItem;
                 itemRequisicaoExistente.IdPro = itemRequisicao.IdPro;
                 itemRequisicaoExistente.IdReq = itemRequisicao.IdReq;
                 itemRequisicaoExistente.IdSec = itemRequisicao.IdSec;

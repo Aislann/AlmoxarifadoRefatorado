@@ -1,5 +1,6 @@
 ﻿using AlmoxarifadoDomain.Models;
 using AlmoxarifadoInfrastructure.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlmoxarifadoInfrastructure.Data.Repositories
 {
@@ -77,8 +78,16 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
         public Requisicao DeletarRequisicao(Requisicao requisicao)
         {
-            _context.Requisicoes.Remove(requisicao);
-            _context.SaveChanges();
+            var requisicaoComItens = _context.Requisicoes
+                .Include(r => r.ItensReqs)
+                .FirstOrDefault(r => r.IdReq == requisicao.IdReq);
+
+            if (requisicaoComItens != null)
+            {
+                _context.ItensReqs.RemoveRange(requisicaoComItens.ItensReqs);
+                _context.Requisicoes.Remove(requisicaoComItens);
+                _context.SaveChanges();
+            }
             return requisicao;
         }
     }

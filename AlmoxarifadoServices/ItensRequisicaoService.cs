@@ -42,8 +42,8 @@ namespace AlmoxarifadoServices
                     IdSec = itemRequisicao.IdSec,
                     QtdPro = itemRequisicao.QtdPro,
                     PreUnit = itemRequisicao.PreUnit,
-                    TotalItem = itemRequisicao.TotalItem,
-                    TotalReal = itemRequisicao.TotalReal
+                    TotalItem = itemRequisicao.QtdPro * itemRequisicao.PreUnit,
+                    TotalReal = itemRequisicao.QtdPro * itemRequisicao.PreUnit
                 });
             return new ItensRequisicaoGetDTO 
             { 
@@ -53,8 +53,8 @@ namespace AlmoxarifadoServices
                 IdSec = itemSalvo.IdSec,
                 QtdPro = itemSalvo.QtdPro,
                 PreUnit = itemSalvo.PreUnit,
-                TotalItem = itemSalvo.TotalItem,
-                TotalReal = itemSalvo.TotalReal
+                TotalItem = itemSalvo.QtdPro * itemSalvo.PreUnit,
+                TotalReal = itemSalvo.QtdPro * itemSalvo.PreUnit
             };
         }
         public ItensRequisicaoGetDTO AtualizarItemRequisicao(int numeroItem, ItensRequisicaoPutDTO novoItemRequisicao)
@@ -67,8 +67,8 @@ namespace AlmoxarifadoServices
                 itemExistente.IdSec = novoItemRequisicao.IdSec;
                 itemExistente.QtdPro = novoItemRequisicao.QtdPro;
                 itemExistente.PreUnit = novoItemRequisicao.PreUnit;
-                itemExistente.TotalItem = novoItemRequisicao.TotalItem;
-                itemExistente.TotalReal = novoItemRequisicao.TotalReal;
+                itemExistente.TotalItem = novoItemRequisicao.PreUnit * novoItemRequisicao.PreUnit;
+                itemExistente.TotalReal = novoItemRequisicao.PreUnit * novoItemRequisicao.PreUnit;
 
                 _itensRequisicaoRepository.AtualizarItemRequisicao(itemExistente);
 

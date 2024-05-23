@@ -9,9 +9,11 @@ namespace AlmoxarifadoAPI.Controllers
     public class RequisicoesController : ControllerBase
     {
         private readonly RequisicaoService _requisicaoService;
+        private readonly EstoqueService _estoqueService;
 
-        public RequisicoesController(RequisicaoService requisicaoService)
+        public RequisicoesController(RequisicaoService requisicaoService, EstoqueService estoqueService)
         {
+            _estoqueService = estoqueService;
             _requisicaoService = requisicaoService;
         }
 
