@@ -48,7 +48,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
         public ItensNota AtualizarItemNota(ItensNota itemNota)
         {
-            var itemExistente = _context.ItensNota.FirstOrDefault(i => i.ItemNum == itemNota.ItemNum);
+            var itemExistente = _context.ItensNota.FirstOrDefault(item => item.ItemNum == itemNota.ItemNum);
             if (itemExistente != null)
             {
                 itemExistente.IdPro = itemNota.IdPro;

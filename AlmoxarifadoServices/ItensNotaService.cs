@@ -41,8 +41,8 @@ namespace AlmoxarifadoServices
                     IdNota = itemNota.IdNota, 
                     IdSec = itemNota.IdSec,
                     QtdPro = itemNota.QtdPro, 
-                    PreUnit = itemNota.PreUnit, 
-                    TotalItem = itemNota.TotalItem,
+                    PreUnit = itemNota.PreUnit,
+                    TotalItem = itemNota.QtdPro * itemNota.PreUnit,
                     EstLin = itemNota.EstLin
                 });
 
@@ -54,7 +54,7 @@ namespace AlmoxarifadoServices
                 IdSec = itemSalvo.IdSec,
                 QtdPro = itemSalvo.QtdPro,
                 PreUnit = itemSalvo.PreUnit,
-                TotalItem = itemSalvo.TotalItem,
+                TotalItem = itemSalvo.QtdPro * itemNota.PreUnit,
                 EstLin = itemSalvo.EstLin
             };
         }
@@ -68,7 +68,7 @@ namespace AlmoxarifadoServices
                 itemExistente.IdSec = novoItemNota.IdSec;
                 itemExistente.QtdPro = novoItemNota.QtdPro;
                 itemExistente.PreUnit = novoItemNota.PreUnit;
-                itemExistente.TotalItem = novoItemNota.TotalItem;
+                itemExistente.TotalItem = novoItemNota.QtdPro * novoItemNota.PreUnit;
                 itemExistente.EstLin = novoItemNota.EstLin;
 
                 _itensNotaRepository.AtualizarItemNota(itemExistente);

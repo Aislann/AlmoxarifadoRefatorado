@@ -70,10 +70,10 @@ namespace AlmoxarifadoAPI.Controllers
                 });
                 return Ok(itemSalvo);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -100,9 +100,9 @@ namespace AlmoxarifadoAPI.Controllers
                 });
                 return Ok(itemAtualizado);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Ocorreu um erro ao acessar os dados. Por favor, tente novamente mais tarde.");
+                return StatusCode(500, e.Message) ;
             }
         }
 

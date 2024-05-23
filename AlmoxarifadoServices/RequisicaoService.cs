@@ -88,7 +88,10 @@ namespace AlmoxarifadoServices
 
         public RequisicaoGetDTO DeletarItemRequisicao(Requisicao requisicao)
         {
+
             var requisicaoDeletada = _requisicaoRepository.DeletarRequisicao(requisicao);
+            var teste = 0;
+            Console.WriteLine(teste);
             if (requisicaoDeletada != null)
             {
                 var mapper = configurationMapper.CreateMapper();

@@ -1,5 +1,6 @@
 ﻿using AlmoxarifadoDomain.Models;
 using AlmoxarifadoInfrastructure.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlmoxarifadoInfrastructure.Data.Repositories
 {
@@ -89,8 +90,16 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
         public NotaFiscal DeletarNotaFiscal(NotaFiscal notaFiscal)
         {
-            _context.NotasFiscais.Remove(notaFiscal);
-            _context.SaveChanges();
+            var notaFiscalComItens = _context.NotasFiscais
+                .Include(nf => nf.ItensNota)
+                .FirstOrDefault(nf => nf.IdNota == notaFiscal.IdNota);
+
+            if (notaFiscalComItens != null)
+            {
+                _context.ItensNota.RemoveRange(notaFiscalComItens.ItensNota);
+                _context.NotasFiscais.Remove(notaFiscalComItens);
+                _context.SaveChanges();
+            }
             return notaFiscal;
         }
     }
