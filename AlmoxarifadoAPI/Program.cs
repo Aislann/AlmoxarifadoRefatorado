@@ -1,23 +1,23 @@
 using AlmoxarifadoDomain.Models;
-using AlmoxarifadoInfrastructure.Data;
 using AlmoxarifadoInfrastructure.Data.Interfaces;
 using AlmoxarifadoInfrastructure.Data.Repositories;
 using AlmoxarifadoServices;
 using Microsoft.EntityFrameworkCore;
-using static AlmoxarifadoInfrastructure.Data.Repositories.ConexaoBancoRepository;
+using static AlmoxarifadoServices.ConexaoBancoService;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IConexaoBanco, ReplicaConexao>(sp =>
-    new ReplicaConexao(builder.Configuration));
-builder.Services.AddSingleton<IConexaoBanco, PrimeiraConexao>(sp =>
-    new PrimeiraConexao(builder.Configuration));
 
-builder.Services.AddSingleton<DbContextAlmoxarifado>();
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+builder.Services.AddSingleton<PrimeiraConexao>(sp => new PrimeiraConexao(builder.Configuration));
+builder.Services.AddSingleton<ReplicaConexao>(sp => new ReplicaConexao(builder.Configuration));
+
+builder.Services.AddSingleton<AlmoxarifadoInfrastructure.Data.ConexaoBancoService>();
 
 builder.Services.AddDbContext<xAlmoxarifadoContext>((serviceProvider, options) =>
 {
-    var dbContextStrategy = serviceProvider.GetRequiredService<DbContextAlmoxarifado>();
-    var connectionString = dbContextStrategy.GetConnectionString();
+    var conexaoBancoService = serviceProvider.GetRequiredService<AlmoxarifadoInfrastructure.Data.ConexaoBancoService>();
+    var connectionString = conexaoBancoService.GetConnectionString();
     options.UseSqlServer(connectionString);
 });
 

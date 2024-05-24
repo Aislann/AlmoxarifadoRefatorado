@@ -1,9 +1,9 @@
 ﻿using AlmoxarifadoInfrastructure.Data.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace AlmoxarifadoInfrastructure.Data.Repositories
+namespace AlmoxarifadoServices
 {
-    public class ConexaoBancoRepository
+    public class ConexaoBancoService
     {
         public class PrimeiraConexao : IConexaoBanco
         {
@@ -16,7 +16,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
             public string GetConnectionString()
             {
-                return _configuration.GetConnectionString("ConexaoCasa");
+                return _configuration.GetConnectionString("ConexaoReplicaSQL");
             }
         }
 
@@ -31,7 +31,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
             public string GetConnectionString()
             {
-                return _configuration.GetConnectionString("ConexaoReplicaSQL");
+                return _configuration.GetConnectionString("ConexaoCasa");
             }
         }
 
