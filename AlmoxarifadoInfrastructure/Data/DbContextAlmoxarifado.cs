@@ -1,29 +1,50 @@
-﻿using AlmoxarifadoInfrastructure.Data.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using System.Data.SqlClient;
+using static AlmoxarifadoServices.ConexaoBancoService;
 
 namespace AlmoxarifadoInfrastructure.Data
 {
-    public class DbContextAlmoxarifado
+    public class ConexaoBancoService
     {
-        private readonly IConexaoBanco _primeiraConexaco;
-        private readonly IConexaoBanco _replicaConexaco;
+        private readonly PrimeiraConexao _primeiraConexao;
+        private readonly ReplicaConexao _replicaConexao;
+        private readonly ILogger<ConexaoBancoService> _logger;
 
-        public DbContextAlmoxarifado(IConexaoBanco primeiraConexaco, IConexaoBanco replicaConexaco)
+        public ConexaoBancoService(PrimeiraConexao primeiraConexao, ReplicaConexao replicaConexao, ILogger<ConexaoBancoService> logger)
         {
-            _primeiraConexaco = primeiraConexaco;
-            _replicaConexaco = replicaConexaco;
+            _primeiraConexao = primeiraConexao;
+            _replicaConexao = replicaConexao;
+            _logger = logger;
         }
 
         public string GetConnectionString()
         {
+            if (VerificarConexao(_primeiraConexao.GetConnectionString()))
+            {
+                return _primeiraConexao.GetConnectionString();
+            }
+            else
+            {
+                _logger.LogWarning("Conexão primária indisponível. Tentando conexão de réplica.");
+                return _replicaConexao.GetConnectionString();
+            }
+        }
+
+        private bool VerificarConexao(string connectionString)
+        {
             try
             {
-                return _primeiraConexaco.GetConnectionString();
+                using (var conexao = new SqlConnection(connectionString))
+                {
+                    conexao.Open();
+                    return true;
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return _replicaConexaco.GetConnectionString();
+                _logger.LogError(ex, "Erro ao tentar conectar usando a string de conexão: {ConnectionString}", connectionString);
+                return false;
             }
         }
     }
-
 }
