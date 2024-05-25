@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Data.SqlClient;
-using static AlmoxarifadoServices.ConexaoBancoService;
+using static AlmoxarifadoInfrastructure.Data.Repositories.ConexaoBancoRepository;
 
 namespace AlmoxarifadoInfrastructure.Data
 {

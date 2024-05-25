@@ -1,5 +1,4 @@
-﻿using AlmoxarifadoDomain.Models;
-using AlmoxarifadoServices;
+﻿using AlmoxarifadoServices;
 using AlmoxarifadoServices.DTO;
 using Microsoft.AspNetCore.Mvc;
 
