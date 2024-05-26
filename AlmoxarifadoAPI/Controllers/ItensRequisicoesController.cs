@@ -96,8 +96,8 @@ namespace AlmoxarifadoAPI.Controllers
                     IdSec = itemAtualizado.IdSec,
                     QtdPro = itemAtualizado.QtdPro,
                     PreUnit = itemAtualizado.PreUnit,
-                    TotalItem = itemAtualizado.TotalItem,
-                    TotalReal = itemAtualizado.TotalReal
+                    TotalItem = itemAtualizado.QtdPro * itemAtualizado.PreUnit,
+                    TotalReal = itemAtualizado.QtdPro * itemAtualizado.PreUnit
                 });
                 return Ok(itemAtualizado);
             }

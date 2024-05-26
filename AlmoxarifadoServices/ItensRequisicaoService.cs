@@ -67,8 +67,8 @@ namespace AlmoxarifadoServices
                 itemExistente.IdSec = novoItemRequisicao.IdSec;
                 itemExistente.QtdPro = novoItemRequisicao.QtdPro;
                 itemExistente.PreUnit = novoItemRequisicao.PreUnit;
-                itemExistente.TotalItem = novoItemRequisicao.PreUnit * novoItemRequisicao.PreUnit;
-                itemExistente.TotalReal = novoItemRequisicao.PreUnit * novoItemRequisicao.PreUnit;
+                itemExistente.TotalItem = novoItemRequisicao.QtdPro * novoItemRequisicao.PreUnit;
+                itemExistente.TotalReal = novoItemRequisicao.QtdPro * novoItemRequisicao.PreUnit;
 
                 _itensRequisicaoRepository.AtualizarItemRequisicao(itemExistente);
 

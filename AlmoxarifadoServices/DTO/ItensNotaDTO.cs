@@ -23,7 +23,6 @@
     }
     public class ItensNotaPutDTO
     {
-        public int ItemNum { get; set; }
         public int IdPro { get; set; }
         public int IdNota { get; set; }
         public int IdSec { get; set; }
