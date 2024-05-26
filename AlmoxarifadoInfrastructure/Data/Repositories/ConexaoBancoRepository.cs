@@ -16,7 +16,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
             public string GetConnectionString()
             {
-                return _configuration.GetConnectionString("ConexaoReplicaSQL");
+                return _configuration.GetConnectionString("ConexaoAislan");
             }
         }
 
@@ -31,7 +31,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
             public string GetConnectionString()
             {
-                return _configuration.GetConnectionString("ConexaoCasa");
+                return _configuration.GetConnectionString("ConexaoReplicaSQL");
             }
         }
 

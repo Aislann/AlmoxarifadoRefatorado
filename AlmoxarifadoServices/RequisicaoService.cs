@@ -65,7 +65,6 @@ namespace AlmoxarifadoServices
             var requisicaoExistente = _requisicaoRepository.ObterRequisicaoPorId(id);
             if (requisicaoExistente != null)
             {
-                //requisicaoExistente.IdCli = novaRequisicao.IdCli;
                 requisicaoExistente.TotalReq = novaRequisicao.TotalReq;
                 requisicaoExistente.QtdIten = novaRequisicao.QtdIten;
                 requisicaoExistente.DataReq = novaRequisicao.DataReq;
