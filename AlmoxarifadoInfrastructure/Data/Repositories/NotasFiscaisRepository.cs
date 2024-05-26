@@ -62,7 +62,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
         public NotaFiscal AtualizarNotaFiscal(NotaFiscal notaFiscal)
         {
-            var notaExistente = _context.NotasFiscais.FirstOrDefault(i => i.IdNota == notaFiscal.IdNota);
+            var notaExistente = _context.NotasFiscais.FirstOrDefault(nota => nota.IdNota == notaFiscal.IdNota);
             if (notaExistente != null)
             {
                 notaExistente.IdFor = notaFiscal.IdFor;
@@ -91,8 +91,8 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
         public NotaFiscal DeletarNotaFiscal(NotaFiscal notaFiscal)
         {
             var notaFiscalComItens = _context.NotasFiscais
-                .Include(nf => nf.ItensNota)
-                .FirstOrDefault(nf => nf.IdNota == notaFiscal.IdNota);
+                .Include(notaFiscal => notaFiscal.ItensNota)
+                .FirstOrDefault(notaFiscal => notaFiscal.IdNota == notaFiscal.IdNota);
 
             if (notaFiscalComItens != null)
             {

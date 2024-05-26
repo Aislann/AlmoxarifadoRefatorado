@@ -14,7 +14,7 @@ namespace AlmoxarifadoInfrastructure.Data.Repositories
 
         public Produto ObterProdutoPorId(int idProduto)
         {
-            return _context.Produtos.FirstOrDefault(p => p.IdPro == idProduto);
+            return _context.Produtos.FirstOrDefault(produto => produto.IdPro == idProduto);
         }
     }
 }
