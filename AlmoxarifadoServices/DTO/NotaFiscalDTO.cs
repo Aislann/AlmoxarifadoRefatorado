@@ -19,7 +19,7 @@
     }
     public class NotaFiscalPostDTO
     {
-        public int? IdFor { get; set; }
+        //public int? IdFor { get; set; }
         public int IdSec { get; set; }
         public string NumNota { get; set; }
         public decimal ValorNota { get; set; }

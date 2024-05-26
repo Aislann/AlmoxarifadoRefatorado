@@ -65,7 +65,7 @@ namespace AlmoxarifadoServices
             var requisicaoExistente = _requisicaoRepository.ObterRequisicaoPorId(id);
             if (requisicaoExistente != null)
             {
-                requisicaoExistente.IdCli = novaRequisicao.IdCli;
+                //requisicaoExistente.IdCli = novaRequisicao.IdCli;
                 requisicaoExistente.TotalReq = novaRequisicao.TotalReq;
                 requisicaoExistente.QtdIten = novaRequisicao.QtdIten;
                 requisicaoExistente.DataReq = novaRequisicao.DataReq;
@@ -90,8 +90,6 @@ namespace AlmoxarifadoServices
         {
 
             var requisicaoDeletada = _requisicaoRepository.DeletarRequisicao(requisicao);
-            var teste = 0;
-            Console.WriteLine(teste);
             if (requisicaoDeletada != null)
             {
                 var mapper = configurationMapper.CreateMapper();

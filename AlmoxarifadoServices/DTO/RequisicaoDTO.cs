@@ -27,7 +27,7 @@
     }
     public class RequisicaoPutDTO
     {
-        public int IdCli { get; set; }
+        //public int IdCli { get; set; }
         public decimal? TotalReq { get; set; }
         public int? QtdIten { get; set; }
         public DateTime DataReq { get; set; }

@@ -36,7 +36,7 @@ namespace AlmoxarifadoServices
             var notaFiscalSalva = _notaFiscalRepository.CriarNotaFiscal(
                 new NotaFiscal
                 {
-                    IdFor = notaFiscal.IdFor,
+                    //IdFor = notaFiscal.IdFor,
                     IdSec = notaFiscal.IdSec,
                     NumNota = notaFiscal.NumNota,
                     ValorNota = notaFiscal.ValorNota,

@@ -3,7 +3,7 @@ using AlmoxarifadoInfrastructure.Data.Interfaces;
 using AlmoxarifadoInfrastructure.Data.Repositories;
 using AlmoxarifadoServices;
 using Microsoft.EntityFrameworkCore;
-using static AlmoxarifadoServices.ConexaoBancoService;
+using static AlmoxarifadoInfrastructure.Data.Repositories.ConexaoBancoRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 

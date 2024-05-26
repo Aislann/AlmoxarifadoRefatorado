@@ -1,9 +1,9 @@
 ﻿using AlmoxarifadoInfrastructure.Data.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace AlmoxarifadoServices
+namespace AlmoxarifadoInfrastructure.Data.Repositories
 {
-    public class ConexaoBancoService
+    public class ConexaoBancoRepository
     {
         public class PrimeiraConexao : IConexaoBanco
         {

@@ -22,7 +22,6 @@
     }
     public class ItensRequisicaoPutDTO
     {
-        public int NumItem { get; set; }
         public int IdPro { get; set; }
         public int IdReq { get; set; }
         public int IdSec { get; set; }
